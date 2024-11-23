@@ -1,0 +1,16 @@
+{
+    "mode" : "live",
+    "redis" : {
+        "host" : "127.0.0.1",
+        "port" : 6379
+    },
+    "elasticsearch" : {
+        "host" : "127.0.0.1",
+        "port" : 9200,
+        "key" : "RE9SdkhaTUJzOVRWTmpDV3lBQ2w6bk9pZTFEZzlRd0NLSXJlSEF0VmlQUQ=="
+    },
+    "prometheus" : {
+        "route" : "/metrics",
+        "port" : 2112
+    }
+}

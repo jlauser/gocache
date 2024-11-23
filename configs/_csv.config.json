@@ -1,0 +1,19 @@
+{
+    "mode" : "test",
+    "redis" : {
+        "host" : "./data/redis.csv",
+        "port" : 0
+    },
+    "elasticsearch" : {
+        "host" : "./data/elasticsearch.csv",
+        "port" : 0,
+        "key" : ""
+    }, 
+    "sqlite" : {
+        "path" : "file::memory:?cache=shared"
+    },
+    "prometheus" : {
+        "route" : "/metrics",
+        "port" : 2112
+    }
+}
