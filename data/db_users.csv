@@ -1,0 +1,101 @@
+last_name=TEXT,first_name=TEXT,title=TEXT,email=TEXT,employee_id=TEXT,start_date=TEXT
+Taylor,Clark,Software Quality Assurance Engineer,clark.taylor@mayo.edu,F35362,2016-03-05
+Quinn,Miller,Systems Analyst,miller.quinn@mayo.edu,I52503,2021-01-09
+Skyler,Martin,Network Engineer,martin.skyler@mayo.edu,O58660,2012-11-24
+Reagan,Martinez,Technical Support Engineer,martinez.reagan@mayo.edu,J54928,2022-08-18
+Charlie,Lopez,DevOps Engineer,lopez.charlie@mayo.edu,H21519,2017-11-21
+Sydney,Taylor,IT Project Manager,taylor.sydney@mayo.edu,P13138,2021-04-01
+Dakota,Perez,DevOps Engineer,perez.dakota@mayo.edu,H47727,2024-05-07
+Casey,Anderson,Cloud Architect,anderson.casey@mayo.edu,W16158,2020-12-23
+Arden,Gonzalez,Web Developer,gonzalez.arden@mayo.edu,X62865,2018-01-10
+Casey,Clark,Database Administrator,clark.casey@mayo.edu,V53004,2014-09-02
+Dakota,Jackson,Technical Support Engineer,jackson.dakota@mayo.edu,U97808,2012-08-19
+Blake,Harris,Systems Architect,harris.blake@mayo.edu,P79361,2021-04-20
+Cameron,Clark,Database Administrator,clark.cameron@mayo.edu,Q54940,2020-02-09
+Jordan,Martin,IT Project Manager,martin.jordan@mayo.edu,J80861,2018-01-07
+Sage,Johnson,Systems Architect,johnson.sage@mayo.edu,F57714,2016-12-10
+Sage,Moore,IT Support Specialist,moore.sage@mayo.edu,P86621,2021-07-15
+Reese,Lopez,Application Developer,lopez.reese@mayo.edu,R05330,2013-10-15
+Finley,Ramirez,Web Developer,ramirez.finley@mayo.edu,R43378,2017-03-27
+Payton,Clark,Cloud Architect,clark.payton@mayo.edu,C36812,2024-10-03
+Arden,Perez,IT Manager,perez.arden@mayo.edu,I93649,2014-09-01
+Taylor,Martin,Technical Support Engineer,martin.taylor@mayo.edu,D68933,2012-11-07
+Dakota,Anderson,Network Engineer,anderson.dakota@mayo.edu,X13593,2016-08-22
+Jayden,Martin,Network Engineer,martin.jayden@mayo.edu,R20530,2017-09-22
+Logan,Thomas,Machine Learning Engineer,thomas.logan@mayo.edu,V23486,2024-09-03
+Payton,Sanchez,Cloud Architect,sanchez.payton@mayo.edu,W29984,2014-06-26
+Reese,Garcia,Network Engineer,garcia.reese@mayo.edu,K31084,2019-08-03
+Alex,Smith,Network Engineer,smith.alex@mayo.edu,J18935,2010-05-29
+Arden,Williams,IT Support Specialist,williams.arden@mayo.edu,R59731,2014-07-13
+Logan,Walker,Network Engineer,walker.logan@mayo.edu,H11809,2023-06-10
+Drew,Davis,IT Support Specialist,davis.drew@mayo.edu,Y13897,2011-11-06
+Dakota,Ramirez,Database Administrator,ramirez.dakota@mayo.edu,Y07126,2023-03-17
+Charlie,Sanchez,Computer Systems Analyst,sanchez.charlie@mayo.edu,R57828,2018-05-24
+Jordan,Martin,Cybersecurity Analyst,martin.jordan@mayo.edu,R36062,2014-11-21
+Parker,Wilson,Database Administrator,wilson.parker@mayo.edu,T42572,2023-09-15
+Hayden,Robinson,IT Project Manager,robinson.hayden@mayo.edu,F36217,2024-01-23
+Skyler,Martinez,Network Engineer,martinez.skyler@mayo.edu,S99648,2021-06-22
+Sydney,Hernandez,IT Project Manager,hernandez.sydney@mayo.edu,H52865,2014-06-29
+Blake,Gonzalez,Machine Learning Engineer,gonzalez.blake@mayo.edu,W49567,2023-02-01
+Cameron,Lopez,Cloud Architect,lopez.cameron@mayo.edu,Z43906,2022-01-30
+Taylor,Gonzalez,Technical Support Engineer,gonzalez.taylor@mayo.edu,O15608,2015-04-17
+Blake,Brown,IT Manager,brown.blake@mayo.edu,U99675,2018-11-16
+Cameron,Miller,Business Intelligence Analyst,miller.cameron@mayo.edu,R15063,2024-06-18
+Sydney,Lewis,Application Developer,lewis.sydney@mayo.edu,S79028,2018-10-20
+Avery,Moore,Technical Support Engineer,moore.avery@mayo.edu,K64807,2014-10-27
+Hayden,Johnson,IT Manager,johnson.hayden@mayo.edu,U20656,2024-06-17
+Drew,Williams,Database Administrator,williams.drew@mayo.edu,K18310,2019-10-23
+Morgan,Thompson,Application Developer,thompson.morgan@mayo.edu,J55796,2017-04-08
+Jayden,Hernandez,Cloud Architect,hernandez.jayden@mayo.edu,P53391,2011-07-18
+Parker,Brown,Network Engineer,brown.parker@mayo.edu,R92417,2011-09-28
+Aidan,Thomas,Systems Architect,thomas.aidan@mayo.edu,E73336,2024-05-30
+Jayden,Garcia,Cybersecurity Analyst,garcia.jayden@mayo.edu,T14261,2018-10-03
+Riley,Anderson,Computer Systems Analyst,anderson.riley@mayo.edu,Z90873,2013-05-25
+Morgan,White,IT Support Specialist,white.morgan@mayo.edu,D42276,2012-08-02
+Sydney,Perez,Full Stack Developer,perez.sydney@mayo.edu,I82811,2024-08-25
+Jordan,Johnson,Application Developer,johnson.jordan@mayo.edu,H18245,2010-07-14
+Cameron,Williams,Systems Architect,williams.cameron@mayo.edu,C79638,2021-12-12
+Reese,Clark,Full Stack Developer,clark.reese@mayo.edu,F77976,2024-01-15
+Emerson,Lee,Network Engineer,lee.emerson@mayo.edu,H65245,2018-07-09
+Avery,Johnson,Database Administrator,johnson.avery@mayo.edu,Z37279,2020-03-13
+Parker,Clark,Network Engineer,clark.parker@mayo.edu,Q89775,2011-07-04
+Dakota,Martinez,IT Project Manager,martinez.dakota@mayo.edu,K64512,2010-06-15
+Sage,White,Cybersecurity Analyst,white.sage@mayo.edu,R38913,2012-09-12
+Blake,Miller,Machine Learning Engineer,miller.blake@mayo.edu,Y61446,2021-06-19
+Morgan,Martin,IT Project Manager,martin.morgan@mayo.edu,Q48677,2018-11-28
+Sydney,Clark,IT Support Specialist,clark.sydney@mayo.edu,O77870,2010-01-04
+Jayden,Jones,Technical Support Engineer,jones.jayden@mayo.edu,I18137,2024-07-24
+Morgan,Ramirez,Software Developer,ramirez.morgan@mayo.edu,O82984,2015-04-30
+Aidan,Perez,IT Support Specialist,perez.aidan@mayo.edu,G93145,2023-01-09
+Logan,Jones,Full Stack Developer,jones.logan@mayo.edu,G55132,2013-02-02
+Sage,Thompson,Systems Analyst,thompson.sage@mayo.edu,A38600,2020-04-30
+Drew,Walker,Software Developer,walker.drew@mayo.edu,E55206,2014-04-21
+Jamie,Williams,Application Developer,williams.jamie@mayo.edu,E99055,2016-10-23
+Sawyer,Miller,Database Administrator,miller.sawyer@mayo.edu,M86972,2017-01-01
+Cameron,Moore,Network Engineer,moore.cameron@mayo.edu,S98206,2013-10-09
+Dakota,Lewis,Web Developer,lewis.dakota@mayo.edu,J45761,2022-06-30
+Morgan,Jones,Database Administrator,jones.morgan@mayo.edu,C00639,2016-08-22
+Drew,Jones,Application Developer,jones.drew@mayo.edu,J65612,2017-04-30
+Sawyer,Anderson,Cybersecurity Analyst,anderson.sawyer@mayo.edu,L17232,2011-09-30
+Parker,Wilson,IT Project Manager,wilson.parker@mayo.edu,F93325,2018-09-19
+Logan,Clark,Web Developer,clark.logan@mayo.edu,S24314,2023-12-30
+Emerson,Miller,Machine Learning Engineer,miller.emerson@mayo.edu,Z72374,2012-08-11
+Cameron,Martinez,Software Developer,martinez.cameron@mayo.edu,A25439,2014-08-26
+Aidan,Thomas,Machine Learning Engineer,thomas.aidan@mayo.edu,C02248,2011-08-18
+Cameron,White,IT Project Manager,white.cameron@mayo.edu,Y78859,2016-03-14
+Casey,Hernandez,Machine Learning Engineer,hernandez.casey@mayo.edu,S98310,2018-06-26
+Drew,Gonzalez,IT Support Specialist,gonzalez.drew@mayo.edu,N89320,2012-09-24
+Drew,Robinson,Systems Analyst,robinson.drew@mayo.edu,M37420,2018-05-20
+Dakota,White,Software Developer,white.dakota@mayo.edu,N99463,2018-08-11
+Casey,Thompson,Computer Systems Analyst,thompson.casey@mayo.edu,L61406,2015-09-22
+Hayden,Perez,Software Developer,perez.hayden@mayo.edu,J07145,2022-01-26
+Drew,Jackson,IT Support Specialist,jackson.drew@mayo.edu,C43408,2019-10-21
+Avery,Wilson,Cybersecurity Analyst,wilson.avery@mayo.edu,Y02773,2011-10-24
+Reese,Martinez,Software Developer,martinez.reese@mayo.edu,C16447,2017-05-20
+Sawyer,Lewis,Business Intelligence Analyst,lewis.sawyer@mayo.edu,Y76418,2013-11-18
+Cameron,Wilson,Business Intelligence Analyst,wilson.cameron@mayo.edu,I14546,2020-10-04
+Rowan,Lee,Web Developer,lee.rowan@mayo.edu,Q86060,2014-07-11
+Hayden,Walker,Systems Analyst,walker.hayden@mayo.edu,M99449,2009-11-20
+Cameron,Brown,Machine Learning Engineer,brown.cameron@mayo.edu,K29281,2019-04-11
+Jamie,Clark,IT Manager,clark.jamie@mayo.edu,S46113,2021-08-16
+Reagan,Hernandez,Software Quality Assurance Engineer,hernandez.reagan@mayo.edu,J10053,2017-03-04
