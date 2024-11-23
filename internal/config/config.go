@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"log"
 	"os"
 )
 
@@ -54,21 +53,24 @@ func LoadConfig() (*Config, error) {
 	decoder := json.NewDecoder(file)
 	err = decoder.Decode(&config)
 	if err != nil {
-		log.Fatalf("FATAL: LoadConfig: %s", err.Error())
+		return nil, fmt.Errorf("LoadConfig: %w", err)
 	}
 	return &config, nil
 }
 
 func getConfigPath() (string, error) {
 	var path string
+	defaultConfigPath := "./_config.json"
 	configIndex := -1
 
-	// walk arguments passed to program
-	for i := 0; i < len(os.Args); i++ {
-		arg := os.Args[i]
-		if arg == "--config" || arg == "-c" {
-			configIndex = i
-			break
+	// Check for override
+	if len(os.Args) > 1 {
+		for i := 0; i < len(os.Args); i++ {
+			arg := os.Args[i]
+			if arg == "--config" || arg == "-c" {
+				configIndex = i
+				break
+			}
 		}
 	}
 
@@ -79,9 +81,16 @@ func getConfigPath() (string, error) {
 		} else {
 			return "", errors.New("invalid config flag. usage: --config|-c \"<path-to=config>\"")
 		}
-	} else {
-		// Set default config path
-		path = "./_config.json"
+	}
+
+	// no override config
+	if path == "" {
+		// Check for default config file in running dir
+		_, err := os.Stat(defaultConfigPath)
+		if err != nil {
+			return "", errors.New("no config passed and no default config in run dir. usage: --config|-c \"<path-to=config>\"")
+		}
+		path = defaultConfigPath
 	}
 
 	// verify config exists
