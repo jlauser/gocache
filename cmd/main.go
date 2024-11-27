@@ -14,10 +14,6 @@ import (
 	//"net/http"
 )
 
-//type DataStore map[string]interface{}
-
-//var store = make(DataStore)
-
 func panicHandler() {
 	if r := recover(); r != nil {
 		log.Println("recovered from error:", r)
@@ -41,19 +37,21 @@ func main() {
 		Handler: promMux,
 	}
 
-	csvDB, err := db.InitializeDB(cfg.Data)
+	// CSV db
+	csvDB, err := db.Initialize(cfg.Data)
 	if err != nil {
 		panic(err)
 	}
 
-	//key, ok := csvDB.Create("log", "", []string{"test 1"})
+	//key, ok := csvDB.Create("log:", []string{"test 1"})
 	//if ok {
-	//	data, ok := csvDB.Read("log", key)
+	//	result, ok := csvDB.Read("log:" + key)
 	//	if ok {
+	//		data := result.([]string)
 	//		data[1] = "updated"
-	//		csvDB.Update("log", key, data)
+	//		csvDB.Update("log:"+key, data)
 	//	}
-	//	csvDB.Delete("log", key)
+	//	csvDB.Delete("log:" + key)
 	//}
 
 	// main API

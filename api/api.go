@@ -24,6 +24,8 @@ func (app *Application) Mount() http.Handler {
 	r.Use(middleware.Timeout(time.Duration(app.Config.Api.IdleTimeout) * time.Second))
 	r.Route("/v1", func(r chi.Router) {
 		r.Get("/health", app.HealthCheckHandler)
+		r.Get("/users", app.UsersHandler)
+		r.Get("/search", app.SearchHandler)
 	})
 	return r
 }

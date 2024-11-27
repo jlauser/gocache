@@ -1,6 +1,7 @@
 package db
 
 import (
+	"context"
 	"encoding/csv"
 	"fmt"
 	"log"
@@ -13,10 +14,12 @@ import (
 type CsvDB struct {
 	Tables   map[string][][]string
 	Mappings map[string]string
+	Ctx      context.Context
 }
 
-func InitializeDB(path string) (*CsvDB, error) {
+func Initialize(value string) (*CsvDB, error) {
 	// Format path if needed
+	path := value
 	if !strings.HasSuffix(path, "\\") {
 		path = path + "\\"
 	}
@@ -149,8 +152,8 @@ func (db *CsvDB) findInTable(table string, search string) (interface{}, bool) {
 
 	// Search for a row where the first value matches valueToMatch
 	for _, row := range rows {
-		text := strings.Join(row, " ")
-		if strings.Contains(text, search) {
+		text := strings.ToLower(strings.Join(row, " "))
+		if search == "*" || strings.Contains(text, strings.ToLower(search)) {
 			result = append(result, row)
 			foundRows = true
 		}
@@ -222,10 +225,7 @@ func (db *CsvDB) Find(key string, value interface{}) (interface{}, bool) {
 	if !ok {
 		return nil, false
 	}
-	keyParts := strings.SplitN(key, ":", 2)
-	table := keyParts[0]
-	key = keyParts[1]
-	return db.findInTable(table, search)
+	return db.findInTable(key, search)
 }
 
 // Update an item in the CsvDB
