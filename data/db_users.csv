@@ -1,4 +1,3 @@
-last_name=TEXT,first_name=TEXT,title=TEXT,email=TEXT,employee_id=TEXT,start_date=TEXT
 Taylor,Clark,Software Quality Assurance Engineer,clark.taylor@mayo.edu,F35362,2016-03-05
 Quinn,Miller,Systems Analyst,miller.quinn@mayo.edu,I52503,2021-01-09
 Skyler,Martin,Network Engineer,martin.skyler@mayo.edu,O58660,2012-11-24

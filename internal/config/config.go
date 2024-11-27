@@ -8,7 +8,13 @@ import (
 )
 
 type Config struct {
-	Mode  string `json:"mode"`
+	Mode string `json:"mode"`
+	Api  struct {
+		Address     string `json:"address"`
+		WriteTimout int    `json:"write_timeout"`
+		ReadTimout  int    `json:"read_timeout"`
+		IdleTimeout int    `json:"idle_timeout"`
+	} `json:"api"`
 	Data  string `json:"data"`
 	Redis struct {
 		Host string `json:"host"`
@@ -23,8 +29,8 @@ type Config struct {
 		Path string `json:"path"`
 	} `json:"sqlite"`
 	Prometheus struct {
-		Route string `json:"route"`
-		Port  int    `json:"port"`
+		Route   string `json:"route"`
+		Address string `json:"address"`
 	} `json:"prometheus"`
 }
 
@@ -60,44 +66,29 @@ func LoadConfig() (*Config, error) {
 
 func getConfigPath() (string, error) {
 	var path string
-	defaultConfigPath := "./_config.json"
-	configIndex := -1
 
-	// Check for override
+	defaultConfigPaths := []string{"./", "./configs/"}
+	defaultConfigFile := "_config.json"
 	if len(os.Args) > 1 {
-		for i := 0; i < len(os.Args); i++ {
-			arg := os.Args[i]
-			if arg == "--config" || arg == "-c" {
-				configIndex = i
+		path = os.Args[1]
+	}
+	// no override config
+	if path == "" {
+		// Check for default config file in running dir
+		for _, defaultConfigPath := range defaultConfigPaths {
+			filePath := defaultConfigPath + defaultConfigFile
+			_, err := os.Stat(filePath)
+			if err == nil {
+				path = filePath
 				break
 			}
 		}
 	}
 
-	// --config | -c passed. parse value
-	if configIndex >= 0 {
-		if len(os.Args) > configIndex {
-			path = os.Args[configIndex+1]
-		} else {
-			return "", errors.New("invalid config flag. usage: --config|-c \"<path-to=config>\"")
-		}
-	}
-
-	// no override config
-	if path == "" {
-		// Check for default config file in running dir
-		_, err := os.Stat(defaultConfigPath)
-		if err != nil {
-			return "", errors.New("no config passed and no default config in run dir. usage: --config|-c \"<path-to=config>\"")
-		}
-		path = defaultConfigPath
-	}
-
 	// verify config exists
 	_, err := os.Stat(path)
 	if err != nil {
-		fatal := fmt.Sprintf("config file not found. %s", path)
-		return "", errors.New(fatal)
+		return "", errors.New(fmt.Sprintf("config file not found. %s", path))
 	}
 	return path, nil
 }

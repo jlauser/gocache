@@ -1,0 +1,4 @@
+go get github.com/prometheus/client_golang/prometheus/promhttp
+go get -u github.com/go-chi/chi/v5
+
+go install github.com/air-verse/air@latest

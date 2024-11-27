@@ -1,6 +1,12 @@
 {
     "mode" : "test",
-    "data" : "../data/",
+    "api" : {
+        "address" : ":8080",
+        "write_timeout" : 30,
+        "read_timeout" : 10,
+        "idle_timeout" : 60
+    },
+    "data" : "./data/",
     "redis" : {
         "host" : "",
         "port" : 0
@@ -15,6 +21,6 @@
     },
     "prometheus" : {
         "route" : "/metrics",
-        "port" : 2112
+        "address" : ":2112"
     }
 }
