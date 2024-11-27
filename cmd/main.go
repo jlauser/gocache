@@ -38,7 +38,7 @@ func main() {
 	}
 
 	// CSV db
-	csvDB, err := db.Initialize(cfg.Data)
+	csvDB, err := db.InitializeCsvDB(cfg.Data)
 	if err != nil {
 		panic(err)
 	}
@@ -54,10 +54,16 @@ func main() {
 	//	csvDB.Delete("log:" + key)
 	//}
 
+	cache, err := db.InitializeMemoryDB()
+	if err != nil {
+		panic(err)
+	}
+
 	// main API
 	apiApp := &api.Application{
 		Config: cfg,
 		CSV:    csvDB,
+		Cache:  cache,
 	}
 	apiMux := apiApp.Mount()
 

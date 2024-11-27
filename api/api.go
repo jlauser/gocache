@@ -13,6 +13,7 @@ import (
 type Application struct {
 	Config *config.Config
 	CSV    *db.CsvDB
+	Cache  *db.MemoryDB
 }
 
 func (app *Application) Mount() http.Handler {
@@ -41,4 +42,20 @@ func (app *Application) Run(mux http.Handler) error {
 
 	log.Printf("API listening on %s", app.Config.Api.Address)
 	return srv.ListenAndServe()
+}
+
+func (app *Application) cacheGet(key string) (string, bool) {
+	data, ok := app.Cache.Read(key)
+	if ok {
+		return data.(string), ok
+	}
+	return "", false
+}
+
+func (app *Application) cacheInsert(key string, value string) bool {
+	err := app.Cache.Create(key, value)
+	if err != nil {
+		return false
+	}
+	return true
 }

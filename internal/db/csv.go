@@ -17,7 +17,7 @@ type CsvDB struct {
 	Ctx      context.Context
 }
 
-func Initialize(value string) (*CsvDB, error) {
+func InitializeCsvDB(value string) (*CsvDB, error) {
 	// Format path if needed
 	path := value
 	if !strings.HasSuffix(path, "\\") {

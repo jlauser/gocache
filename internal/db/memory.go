@@ -6,19 +6,26 @@ import (
 
 type MemoryStore map[string]interface{}
 
-var store = make(MemoryStore)
-
 type MemoryDB struct {
-	Ctx context.Context
+	Ctx   context.Context
+	Store MemoryStore
+}
+
+func InitializeMemoryDB() (*MemoryDB, error) {
+	result := &MemoryDB{
+		Ctx:   context.Background(),
+		Store: make(MemoryStore),
+	}
+	return result, nil
 }
 
 func (db *MemoryDB) Create(key string, value interface{}) error {
-	store[key] = value
+	db.Store[key] = value
 	return nil
 }
 
 func (db *MemoryDB) Read(key string) (interface{}, bool) {
-	value, ok := store[key]
+	value, ok := db.Store[key]
 	if !ok {
 		return "", false
 	}
@@ -26,7 +33,7 @@ func (db *MemoryDB) Read(key string) (interface{}, bool) {
 }
 
 func (db *MemoryDB) Find(key string) (interface{}, bool) {
-	value, ok := store[key]
+	value, ok := db.Store[key]
 	if !ok {
 		return "", false
 	}
@@ -34,11 +41,11 @@ func (db *MemoryDB) Find(key string) (interface{}, bool) {
 }
 
 func (db *MemoryDB) Update(key string, value interface{}) {
-	store[key] = value
+	db.Store[key] = value
 }
 
 func (db *MemoryDB) Delete(key string) {
-	delete(store, key)
+	delete(db.Store, key)
 }
 
 /*
