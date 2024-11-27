@@ -17,8 +17,9 @@ type Config struct {
 	} `json:"api"`
 	Data  string `json:"data"`
 	Redis struct {
-		Host string `json:"host"`
-		Port int    `json:"port"`
+		Host                string `json:"host"`
+		Port                int    `json:"port"`
+		DefaultCacheSeconds int    `json:"default_cache_seconds"`
 	} `json:"redis"`
 	Elasticsearch struct {
 		Host string `json:"host"`

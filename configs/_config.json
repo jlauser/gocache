@@ -9,7 +9,8 @@
     "data" : "./data/",
     "redis" : {
         "host" : "",
-        "port" : 0
+        "port" : 0,
+        "default_cache_seconds" : 60
     },
     "elasticsearch" : {
         "host" : "",
