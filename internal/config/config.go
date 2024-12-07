@@ -35,7 +35,7 @@ type Config struct {
 	} `json:"prometheus"`
 }
 
-func LoadConfig() (*Config, error) {
+func NewConfig() (*Config, error) {
 	config := Config{}
 
 	// determine config path to use

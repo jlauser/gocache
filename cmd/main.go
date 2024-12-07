@@ -1,17 +1,19 @@
 package main
 
 import (
-	//"encoding/json"
-	//"fmt"
-
+	"context"
 	"errors"
+	"fmt"
 	"github.com/jlauser/gocache/api"
 	"github.com/jlauser/gocache/internal/config"
 	"github.com/jlauser/gocache/internal/db"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"log"
 	"net/http"
-	//"net/http"
+	"os"
+	"os/signal"
+	"sync"
+	"time"
 )
 
 func panicHandler() {
@@ -20,11 +22,12 @@ func panicHandler() {
 	}
 }
 
-func main() {
-	defer panicHandler()
+func run(ctx context.Context) error {
+	var _, cancel = signal.NotifyContext(ctx, os.Interrupt)
+	defer cancel()
 
 	// load config
-	cfg, err := config.LoadConfig()
+	cfg, err := config.NewConfig()
 	if err != nil {
 		panic(err)
 	}
@@ -32,10 +35,16 @@ func main() {
 	// prometheus metrics
 	promMux := http.NewServeMux()
 	promMux.Handle(cfg.Prometheus.Route, promhttp.Handler())
-	promServer := &http.Server{
+	promHttpServer := &http.Server{
 		Addr:    cfg.Prometheus.Address,
 		Handler: promMux,
 	}
+	go func() {
+		log.Printf("Prometheus listening on %s", promHttpServer.Addr)
+		if err := promHttpServer.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
+			log.Fatalf("error starting prometheus server @ %s: %v\n", promHttpServer.Addr, err)
+		}
+	}()
 
 	// CSV db
 	csvDB, err := db.InitializeCsvDB(cfg.Data)
@@ -43,141 +52,58 @@ func main() {
 		panic(err)
 	}
 
-	//key, ok := csvDB.Create("log:", []string{"test 1"})
-	//if ok {
-	//	result, ok := csvDB.Read("log:" + key)
-	//	if ok {
-	//		data := result.([]string)
-	//		data[1] = "updated"
-	//		csvDB.Update("log:"+key, data)
-	//	}
-	//	csvDB.Delete("log:" + key)
-	//}
-
 	cache, err := db.InitializeMemoryDB()
 	if err != nil {
 		panic(err)
 	}
 
 	// main API
-	apiApp := &api.Application{
+	apiServer := &api.Server{
 		Config: cfg,
 		CSV:    csvDB,
 		Cache:  cache,
 	}
-	apiMux := apiApp.Mount()
-
-	// Start servers in separate go routine
+	apiMux := apiServer.NewServer()
+	apiHttpServer := &http.Server{
+		Addr:         cfg.Api.Address,
+		Handler:      apiMux,
+		WriteTimeout: time.Second * time.Duration(cfg.Api.WriteTimout),
+		ReadTimeout:  time.Second * time.Duration(cfg.Api.ReadTimout),
+		IdleTimeout:  time.Second * time.Duration(cfg.Api.IdleTimeout),
+	}
 	go func() {
-		log.Printf("Prometheus listening on %s", promServer.Addr)
-		if err := promServer.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
-			log.Fatalf("error starting prometheus server @ %s: %v\n", promServer.Addr, err)
+		log.Printf("API listening on %s", apiHttpServer.Addr)
+		if err := apiHttpServer.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
+			log.Fatalf("API failed to start @ %s: %v\n", apiHttpServer.Addr, err)
 		}
 	}()
-
+	var wg sync.WaitGroup
+	wg.Add(1)
 	go func() {
-		if err := apiApp.Run(apiMux); err != nil && !errors.Is(err, http.ErrServerClosed) {
-			log.Fatalf("error starting API server @ %s: %v\n", apiApp.Config.Api.Address, err)
+		defer wg.Done()
+		<-ctx.Done()
+		shutdownCtx := context.Background()
+		shutdownCtx, cancel := context.WithTimeout(shutdownCtx, time.Second*10)
+		defer cancel()
+		if err := promHttpServer.Shutdown(shutdownCtx); err != nil && !errors.Is(err, http.ErrServerClosed) {
+			log.Fatalf("Prometheus failed to shutdown @ %s: %v\n", cfg.Prometheus.Address, err)
+		}
+		if err := apiHttpServer.Shutdown(shutdownCtx); err != nil && !errors.Is(err, http.ErrServerClosed) {
+			log.Fatalf("API failed to shutdown @ %s: %v\n", cfg.Api.Address, err)
 		}
 	}()
-	select {}
+	wg.Wait()
+	return nil
 }
 
-/*
-func startHttp() {
-	// prometheus metrics
-	promMux := http.NewServeMux()
-	promMux.Handle("/metrics", promhttp.Handler())
-	promServer := &http.Server{
-		Addr:    ":2112",
-		Handler: promMux,
-	}
-
-	// Set up second server with handlerTwo on port 9090
-	apiMux := http.NewServeMux()
-	apiMux.HandleFunc("/", handleRoot)
-	apiMux.HandleFunc("/query", handleQuery)
-	apiMux.HandleFunc("/create", handleCreate)
-	apiMux.HandleFunc("/read", handleRead)
-	apiMux.HandleFunc("/update", handleUpdate)
-	apiMux.HandleFunc("/delete", handleDelete)
-	apiServer := &http.Server{
-		Addr:    ":8080",
-		Handler: apiMux,
-	}
-
-	// Start servers in separate go routine
-	go func() {
-		if err := promServer.ListenAndServe(); err != nil && err != http.ErrServerClosed {
-			fmt.Printf("error starting prometheus server on port 2112: %v\n", err)
+func main() {
+	defer panicHandler()
+	ctx := context.Background()
+	if err := run(ctx); err != nil {
+		_, err := fmt.Fprintf(os.Stderr, "%s\n", err)
+		if err != nil {
+			return
 		}
-	}()
-	go func() {
-		if err := apiServer.ListenAndServe(); err != nil && err != http.ErrServerClosed {
-			fmt.Printf("error starting API server on port 8080: %v\n", err)
-		}
-	}()
-
-}
-
-func handleRoot(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Welcome to the in-memory db store server!")
-}
-
-func handleQuery(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Query")
-}
-
-func handleCreate(w http.ResponseWriter, r *http.Request) {
-	var db map[string]interface{}
-	err := json.NewDecoder(r.Body).Decode(&db)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
-		return
+		os.Exit(1)
 	}
-
-	key := db["key"].(string)
-	value := db["value"]
-	store[key] = value
-
-	w.WriteHeader(http.StatusCreated)
-	fmt.Fprintf(w, "Key-value pair created successfully!")
 }
-
-func handleRead(w http.ResponseWriter, r *http.Request) {
-	key := r.URL.Query().Get("key")
-
-	value, ok := store[key]
-	if !ok {
-		http.Error(w, "Key not found", http.StatusNotFound)
-		return
-	}
-	w.WriteHeader(http.StatusOK)
-	fmt.Fprintf(w, "Value: %v", value)
-}
-
-func handleUpdate(w http.ResponseWriter, r *http.Request) {
-	var db map[string]interface{}
-	err := json.NewDecoder(r.Body).Decode(&db)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
-		return
-	}
-
-	key := db["key"].(string)
-	value := db["value"]
-	store[key] = value
-
-	w.WriteHeader(http.StatusOK)
-	fmt.Fprintf(w, "Key-value pair updated successfully!")
-}
-
-func handleDelete(w http.ResponseWriter, r *http.Request) {
-	key := r.URL.Query().Get("key")
-	delete(store, key)
-
-	w.WriteHeader(http.StatusOK)
-	fmt.Fprintf(w, "Key-value pair deleted successfully!")
-}
-
-*/

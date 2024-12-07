@@ -125,7 +125,7 @@ func (db *CsvDB) appendToFile(table string, data []string) bool {
 	return true
 }
 
-func (db *CsvDB) getRowFromMap(table string, index string) (interface{}, bool) {
+func (db *CsvDB) getRowFromMap(table string, index string) (any, bool) {
 	// Check if the key exists in the map
 	rows, ok := db.Tables[table]
 	if !ok {
@@ -141,7 +141,7 @@ func (db *CsvDB) getRowFromMap(table string, index string) (interface{}, bool) {
 	return nil, false
 }
 
-func (db *CsvDB) findInTable(table string, search string) (interface{}, bool) {
+func (db *CsvDB) findInTable(table string, search string) (any, bool) {
 	result := make([][]string, 0)
 	foundRows := false
 	// Check if the key exists in the map
@@ -185,7 +185,7 @@ func (db *CsvDB) overwriteFile(table string) bool {
 }
 
 // Create an item to the CsvDB
-func (db *CsvDB) Create(key string, value interface{}) (string, bool) {
+func (db *CsvDB) Create(key string, value any) (string, bool) {
 	keyParts := strings.SplitN(key, ":", 2)
 	table := keyParts[0]
 	key = keyParts[1]
@@ -203,7 +203,7 @@ func (db *CsvDB) Create(key string, value interface{}) (string, bool) {
 }
 
 // Get an item from the CsvDB
-func (db *CsvDB) Read(key string) (interface{}, bool) {
+func (db *CsvDB) Read(key string) (any, bool) {
 	keyParts := strings.SplitN(key, ":", 2)
 	table := keyParts[0]
 	key = keyParts[1]
@@ -220,7 +220,7 @@ func (db *CsvDB) Read(key string) (interface{}, bool) {
 }
 
 // Find an item from the CsvDB
-func (db *CsvDB) Find(key string, value interface{}) (interface{}, bool) {
+func (db *CsvDB) Find(key string, value any) (any, bool) {
 	search, ok := value.(string)
 	if !ok {
 		return nil, false
@@ -229,7 +229,7 @@ func (db *CsvDB) Find(key string, value interface{}) (interface{}, bool) {
 }
 
 // Update an item in the CsvDB
-func (db *CsvDB) Update(key string, value interface{}) bool {
+func (db *CsvDB) Update(key string, value any) bool {
 	keyParts := strings.SplitN(key, ":", 2)
 	table := keyParts[0]
 	key = keyParts[1]
